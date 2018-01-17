@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>super site</title>
-  </head>
-  <body style="background-color:magenta;">
-    <h1>My site is better than zach and justin's site!</h1>
-<img src="http://searchengineland.com/figz/wp-content/seloads/2014/08/penguin-walking-ss-1920-800x450.jpg" alt="Mountain View" width="500" height="377">
-    <p></p>
-  </body>
+    <title>Basic IOT button</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body bgcolor="black">
+    <button type="ledOn" onclick="ledOn()">On</button>
+    <button type="ledOff" onclick="ledOff()">Off</button>
+    <button type="toggleLed" onclick="toggleLed()">toggle</button>
+    <script>
+        var clicks = 0;
+        var accessToken = "d330ca1bb1d6ae3c09b28bbdc0cd88a534e66617";
+        var deviceID = "380020000351353530373132";
+        function ledOn() {
+            console.log("LED is on");
+            clicks = 1;
+            $.post("https://api.particle.io/v1/devices/"+ deviceID +"/led?access_token="+ accessToken , {
+                    value: "on"
+                },                                          //optional 3 debug lines
+                function(error, response, body) {           //optional 3 debug lines
+                    console.log(error, response, body);     //optional 3 debug lines
+                });
+        }
+        function ledOff() {
+            console.log("LED is off");
+            clicks = 0;
+            $.post("https://api.particle.io/v1/devices/"+ deviceID +"/led?access_token="+ accessToken , {
+                value: "off"
+            });
+        }
+        function toggleLed() {
+            if (clicks % 2 == 0) {
+                console.log("LED toggle on");
+                $.post("https://api.particle.io/v1/devices/"+ deviceID +"/led?access_token="+ accessToken , {
+                    value: "on"
+                });
+                clicks++;
+            } else {
+                console.log("LED toggle off");
+                clicks++;
+                $.post("https://api.particle.io/v1/devices/"+ deviceID +"/led?access_token="+ accessToken , {
+                    value: "off"
+                });
+            }
+        }
+    </script>
+</body>
 </html>
