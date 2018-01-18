@@ -1,50 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Basic IOT button</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-</head>
-<body bgcolor="black">
-    <button type="ledOn" onclick="ledOn()">On</button>
-    <button type="ledOff" onclick="ledOff()">Off</button>
-    <button type="toggleLed" onclick="toggleLed()">toggle</button>
-    <script>
-        var clicks = 0;
-        var accessToken = "d330ca1bb1d6ae3c09b28bbdc0cd88a534e66617";
-        var deviceID = "380020000351353530373132";
-        function ledOn() {
-            console.log("LED is on");
-            clicks = 1;
-            $.post("https://api.particle.io/v1/devices/"+ deviceID +"/led?access_token="+ accessToken , {
-                    value: "on"
-                },                                          //optional 3 debug lines
-                function(error, response, body) {           //optional 3 debug lines
-                    console.log(error, response, body);     //optional 3 debug lines
-                });
-        }
-        function ledOff() {
-            console.log("LED is off");
-            clicks = 0;
-            $.post("https://api.particle.io/v1/devices/"+ deviceID +"/led?access_token="+ accessToken , {
-                value: "off"
-            });
-        }
-        function toggleLed() {
-            if (clicks % 2 == 0) {
-                console.log("LED toggle on");
-                $.post("https://api.particle.io/v1/devices/"+ deviceID +"/led?access_token="+ accessToken , {
-                    value: "on"
-                });
-                clicks++;
-            } else {
-                console.log("LED toggle off");
-                clicks++;
-                $.post("https://api.particle.io/v1/devices/"+ deviceID +"/led?access_token="+ accessToken , {
-                    value: "off"
-                });
-            }
-        }
-    </script>
+<body bgcolor = orange>
+  <h1>JavaScript Form Input</h1>
+  <p>Please input a number between 10 and 20:</p>
+  <input id="inputNum">
+  <button type="button" onclick="myFunction()">I did it</button>
+  <p id="demo"></p>
+  <script>
+    function myFunction() {
+      var x, text;
+      // Get the value of the input field with id="numb"
+      x = document.getElementById("inputNum").value;
+      // If x is less than 10 or greater than 20
+      if (x < 10 || x > 20) {
+        text = "You are out of range!";
+      //if x is not a number
+      } else if (isNaN(x)) {   
+        text = "What? That's not even a number!";
+      } else {
+        text = "I like your input!";
+      }
+      document.getElementById("demo").innerHTML = text;
+    }
+  </script>
 </body>
 </html>
